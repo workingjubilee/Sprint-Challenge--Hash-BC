@@ -104,11 +104,13 @@ if __name__ == '__main__':
         print(last_proof)
         last_hash = obtain_hash(last_proof)
         if hashdict['heads'].get(last_hash[-6:]):
-            new_proof = hashdict['heads'].get(last_hash[-6:][0])
+            new_proof = hashdict['heads'].get(last_hash[-6:])[0]
             new_hashing = False
         else:
             new_proof, hashdict = proof_of_work(last_hash, hashdict)
             new_hashing = True
+
+        print("Trying", new_proof)
 
         post_data = {"proof": new_proof,
                      "id": id}
@@ -121,7 +123,7 @@ if __name__ == '__main__':
         else:
             print(data.get('message'))
 
-        if new_hashing = True:
+        if new_hashing == True:
             hashf = open('hashdict.txt', 'w')
             json.dump(hashdict, hashf)
             hashf.close()
